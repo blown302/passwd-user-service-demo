@@ -16,15 +16,19 @@ function getReadStream(path) {
 function mapToGroup(line) {
     const fields = line.split(':');
 
+    if (fields.length !== 4) throw new Error(`file-parser: invalid line to parse a group: ${line}`);
+
     return {
         name: fields[0],
         gid: parseInt(fields[2]),
-        members: fields[3].split(',')
+        members: fields[3].split(',').filter(member => member !== '')
     }
 }
 
 function mapToUser(line) {
     const fields = line.split(':');
+
+    if (fields.length !== 7) throw new Error('file-parser: invalid file format');
 
     return {
         name: fields[0],
@@ -52,7 +56,16 @@ async function mapReadStream(readStream, mapper) {
     return new Promise((resolve, reject) => {
         const result = [];
 
-        readStream.on(READLINE_EVENT_NAME, line => result.push(mapper(line)));
+        readStream.on(READLINE_EVENT_NAME, line => {
+            if (line.startsWith('#')) return;
+            try {
+                result.push(mapper(line))
+            } catch (e) {
+                reject(e);
+            }
+
+        });
+        readStream.on('error', err => reject(err));
 
         readStream.on(READLINE_EVENT_CLOSE_NAME, () => resolve(result));
     });
