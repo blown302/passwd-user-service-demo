@@ -5,11 +5,15 @@ const READLINE_EVENT_NAME = 'line';
 const READLINE_EVENT_CLOSE_NAME = 'close';
 
 function getReadStream(path) {
-    const fileStream = fs.createReadStream(path);
+    return new Promise((resolve, reject) =>{
+        const fileStream = fs.createReadStream(path);
+        fileStream.on('error', reject);
 
-    return readline.createInterface({
-        input: fileStream,
-        crlfDelay: Infinity
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
+        fileStream.on('open', () => resolve(rl));
     });
 }
 
@@ -41,18 +45,23 @@ function mapToUser(line) {
 }
 
 module.exports.parseGroups = async (path) => {
-    const rl = getReadStream(path);
+    let readStream;
+    try {
+        readStream = await getReadStream(path);
+    } catch (e) {
+        throw e;
+    }
 
-    return mapReadStream(rl, mapToGroup);
+    return mapReadStream(readStream, mapToGroup);
 };
 
 module.exports.parseUsers = async (path) => {
-    const readStream = getReadStream(path);
+    const readStream = await getReadStream(path);
 
     return await mapReadStream(readStream, mapToUser);
 };
 
-async function mapReadStream(readStream, mapper) {
+function mapReadStream(readStream, mapper) {
     return new Promise((resolve, reject) => {
         const result = [];
 
@@ -63,9 +72,7 @@ async function mapReadStream(readStream, mapper) {
             } catch (e) {
                 reject(e);
             }
-
         });
-        readStream.on('error', err => reject(err));
 
         readStream.on(READLINE_EVENT_CLOSE_NAME, () => resolve(result));
     });
