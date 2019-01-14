@@ -1,0 +1,788 @@
+{
+	"info": {
+		"_postman_id": "48d2f726-94e6-43d7-8a12-fb0c14f58415",
+		"name": "passwd-user-service",
+		"description": "Explore and test the passwd user service.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "efc7650c-2400-4bbb-8206-56fa596a4560",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				},
+				"description": "Get all users"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73cd8f35-507e-4ce0-b360-e9bdfc714625",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "379e6e2d-3c9d-4906-8eb0-63523334a29d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"should have uid 5\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.uid).to.eql(5);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users/5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "31781f37-59e9-4a6c-bdb0-4c226f806bee",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users/1001",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Group By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d3c91be2-dbc8-4591-ba85-56c04b392861",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/12",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Group By Id Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fd2e778-ab12-44ce-964c-75bf01eb306a",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/100000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"100000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f7799b6-a5e8-40f1-966d-921950055e48",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users/5/groups",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"5",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Groups User Not Exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f7799b6-a5e8-40f1-966d-921950055e48",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users/71/groups",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"71",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d53b280-d9b7-45fe-ae1f-1703299205f3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/query?member=node&member=games",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"query"
+					],
+					"query": [
+						{
+							"key": "member",
+							"value": "node"
+						},
+						{
+							"key": "member",
+							"value": "games"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Groups Empty with wrong group id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ed0e00a-70d4-4cb4-8732-758ffa391a57",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"should return 0 results\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/query?member=node&member=games&gid=28",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"query"
+					],
+					"query": [
+						{
+							"key": "member",
+							"value": "node"
+						},
+						{
+							"key": "member",
+							"value": "games"
+						},
+						{
+							"key": "gid",
+							"value": "28"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Group Missing Member",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "01eff322-cab9-45cb-8939-d4fec83ef9ef",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"should return 0 results\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/query?member=games&member=root",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"query"
+					],
+					"query": [
+						{
+							"key": "member",
+							"value": "games"
+						},
+						{
+							"key": "member",
+							"value": "root"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Groups Games",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "35a9d7e8-5aaf-4951-8fdb-9b8b9fb3586d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/query?member=games",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"query"
+					],
+					"query": [
+						{
+							"key": "member",
+							"value": "games"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users Query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71f57dcd-1bf5-43d1-a4c9-33beb5e8fc12",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/groups/query",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"groups",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users Query UserId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "62641788-221b-4141-9aee-de85bec72473",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"should be uid 5\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].uid).to.eql(5);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users/query?uid=5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"query"
+					],
+					"query": [
+						{
+							"key": "uid",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users Query Shell",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "302ff0e0-ccc4-4165-90d0-3b3ea4eca4b4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"apt\",\n\t\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users/query?shell=%2Fbin%2Fbash",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"query"
+					],
+					"query": [
+						{
+							"key": "shell",
+							"value": "%2Fbin%2Fbash"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
