@@ -117,4 +117,12 @@ describe('file parsers tests', () => {
             await usersPromise;
         });
     });
+
+    describe('given file does not exist', () => {
+        it('should reject when open fails', async () => {
+            const usersPromise = assert.rejects(parser.parseUsers(''));
+            readStreamMock.emit('error', 'file does not exist');
+            await usersPromise;
+        });
+    })
 });

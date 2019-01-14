@@ -41,7 +41,7 @@ async function getUserGroups(id) {
 }
 
 /**
- * Gets users that meet query criteria.
+ * Gets users that meet query criteria. Assumes an exact match and all provided criteria must match.
  *
  * - name
  * - uid

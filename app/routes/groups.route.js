@@ -63,6 +63,4 @@ function getQuery(query) {
     return params;
 }
 
-
-
 module.exports = router;

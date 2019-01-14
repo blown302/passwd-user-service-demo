@@ -9,27 +9,6 @@ const READLINE_EVENT_NAME = 'line';
 const READLINE_EVENT_CLOSE_NAME = 'close';
 
 /**
- * Gets a readline stream that reads a text file line by line.
- *
- * The {Promise<ReadableStream>>} will reject if the file doesn't exist.
- *
- * @param path The path to the file.
- * @returns {Promise<ReadableStream>} The readline stream to listen for 'line' events.
- */
-function getReadStream(path) {
-    return new Promise((resolve, reject) =>{
-        const fileStream = fs.createReadStream(path);
-        fileStream.on('error', reject);
-
-        const rl = readline.createInterface({
-            input: fileStream,
-            crlfDelay: Infinity
-        });
-        fileStream.on('open', () => resolve(rl));
-    });
-}
-
-/**
  * Mapping function to map a line from a group file to a group object.
  *
  * @param line The line of text to map.
@@ -75,14 +54,7 @@ function mapToUser(line) {
  * @returns {Promise<Object[]>} Represents a list of groups.
  */
 module.exports.parseGroups = async (path) => {
-    let readStream;
-    try {
-        readStream = await getReadStream(path);
-    } catch (e) {
-        throw e;
-    }
-
-    return mapReadStream(readStream, mapToGroup);
+    return mapReadStream(path, mapToGroup);
 };
 
 /**
@@ -92,24 +64,31 @@ module.exports.parseGroups = async (path) => {
  * @returns {Promise<Object[]>} Represents a list of users.
  */
 module.exports.parseUsers = async (path) => {
-    const readStream = await getReadStream(path);
-
-    return await mapReadStream(readStream, mapToUser);
+    return await mapReadStream(path, mapToUser);
 };
 
 /**
  * Shared private function to listen to the readline stream and call the provided mapper function.
  * This function also supports filtering comments prior to mapping.
  *
- * @param readStream The readline stream to read the file line by line.
+ * @param path The path to file to read.
  * @param mapper The mapper to map the line of text to the correct object.
  * @returns {Promise<Object[]>} Represents a list of the mapper return type.
  */
-function mapReadStream(readStream, mapper) {
+function mapReadStream(path, mapper) {
     return new Promise((resolve, reject) => {
+        const fileStream = fs.createReadStream(path);
+
+        fileStream.on('error', reject);
+
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
+
         const result = [];
 
-        readStream.on(READLINE_EVENT_NAME, line => {
+        rl.on(READLINE_EVENT_NAME, line => {
             if (line.startsWith('#')) return;
             try {
                 result.push(mapper(line))
@@ -118,6 +97,6 @@ function mapReadStream(readStream, mapper) {
             }
         });
 
-        readStream.on(READLINE_EVENT_CLOSE_NAME, () => resolve(result));
+        rl.on(READLINE_EVENT_CLOSE_NAME, () => resolve(result));
     });
 }
