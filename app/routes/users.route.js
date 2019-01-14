@@ -1,3 +1,6 @@
+/**
+ * Express router for /users requests.
+ */
 
 const {Router} = require('express');
 const {getAllUsers, getUserById, queryUsers, getUserGroups} = require('../repositories/user.repository');
@@ -38,7 +41,7 @@ router.route('/:id(\\d+)')
             return next(e);
         }
 
-        if (!user) return res.status(404).send();
+        if (!user) return res.status(404).end();
 
         res.json(user);
     });
@@ -52,6 +55,12 @@ router.route('/query')
         }
     });
 
+/**
+ * Creates a parameter object to query users from the user repository.
+ *
+ * @param query Express query parameters captured from request.
+ * @returns {Object} mapped query parameters to query the user repository.
+ */
 function getQuery(query) {
     const params = {};
     if (query.name) params.name = query.name;
@@ -59,6 +68,7 @@ function getQuery(query) {
     if (query.uid) params.uid = parseInt(query.uid);
     if (query.comment) params.comment = query.comment;
     if (query.home) params.home = query.home;
+    if (query.shell) params.shell = query.shell;
 
     return params;
 }

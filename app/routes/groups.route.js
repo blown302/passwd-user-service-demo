@@ -1,3 +1,7 @@
+/**
+ * Express router for /groups requests.
+ */
+
 const {Router} = require('express');
 const {getAllGroups, getGroupById, queryGroups} = require('../repositories/group.repository');
 
@@ -19,11 +23,17 @@ router.route('/')
 router.route('/:id(\\d+)')
     .get(async (req, res, next) => {
         const id = parseInt(req.params.id);
+
+        let group;
         try {
-            res.json(await getGroupById(id));
+            group = await getGroupById(id);
         } catch (e) {
-            next(e);
+            return next(e);
         }
+
+        if (!group) return res.status(404).end();
+
+        res.json(group);
     });
 
 router.route('/query')
@@ -35,6 +45,12 @@ router.route('/query')
         }
     });
 
+/**
+ * Creates a parameter object to query groups from the group repository.
+ *
+ * @param query Express query parameters captured from request.
+ * @returns {Object} mapped query parameters to query the group repository.
+ */
 function getQuery(query) {
     const params = {};
     if (query.name) params.name = query.name;
