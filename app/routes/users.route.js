@@ -25,7 +25,7 @@ router.route('/:id(\\d+)/groups')
 
         try {
             const groups = await getUserGroups(id);
-            if (groups === null) res.status(404).end();
+            if (groups === null) return res.status(404).end();
             res.json(groups);
         } catch (e) {
             return next(e);
