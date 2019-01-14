@@ -31,12 +31,15 @@ async function getUserById(id) {
 
 /**
  * Get the groups a user is a member of.
+ * if the user is not found it will return null.
  *
  * @param id The uid of the user.
  * @returns {Promise<Array<Object>>} represents a list of groups the user is part of.
  */
 async function getUserGroups(id) {
     const user = await getUserById(id);
+    if (!user) return null;
+
     return await queryGroups({members: [user.name]})
 }
 

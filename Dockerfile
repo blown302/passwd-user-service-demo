@@ -3,4 +3,5 @@ COPY app app
 ADD package.json .
 ADD package-lock.json .
 RUN npm i
+RUN echo "demo:x:1001:node,video,games" >> etc/group
 CMD ["npm", "start"]

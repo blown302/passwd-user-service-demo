@@ -4,6 +4,15 @@ const proxyQuire = require('proxyquire').noCallThru();
 const proxyStub = {};
 
 describe('user repository tests', () => {
+    const allUsers = [
+        {name: 'root', uid: 0, gid: 0, comment: 'root', home: '/root', 'shell': "/bin/bash"},
+        {name: 'tom', uid: 2, gid: 2, comment: 'tom', home: '/home/tom', 'shell': "/bin/bash"},
+        {name: 'docker', uid: 3, gid: 3, comment: 'docker', home: '/home/docker', 'shell': "/bin/bash"},
+    ];
+
+    proxyStub.parseUsers = () => allUsers;
+
+
     describe('given queryUsers is called', () => {
         const allUsers = [
             {name: 'root', uid: 0, gid: 0, comment: 'root', home: '/root', 'shell': "/bin/bash"},

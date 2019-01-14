@@ -20,11 +20,13 @@ router.route('/')
     });
 
 router.route('/:id(\\d+)/groups')
-    .get(async (req, res) => {
+    .get(async (req, res, next) => {
         const id = parseInt(req.params.id);
 
         try {
-            res.json(await getUserGroups(id));
+            const groups = await getUserGroups(id);
+            if (groups === null) res.status(404).end();
+            res.json(groups);
         } catch (e) {
             return next(e);
         }
